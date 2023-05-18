@@ -19,7 +19,7 @@ public class GameManager : Service
         player = new Player(playerObj);
         gameInput = new GameInput();
         gameInput.Enable();
-
+        InputData.moveValue = new VelocityInfo("Input",Vector2.zero);
     }
 
     private void Update()
@@ -37,7 +37,7 @@ public class GameManager : Service
         if (playerInput.Move.phase == InputActionPhase.Started)
         {
             InputData.AddEvent(InputEvent.Move);
-            InputData.moveValue = moveValue;
+            InputData.moveValue.velocity = moveValue;
             // Debug.Log("Move");
         }
 

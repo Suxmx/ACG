@@ -3,9 +3,9 @@ using System.Collections.Generic;
 using MyStateMachine;
 using UnityEngine;
 
-public class Move : State
+public class Move : PlayerState
 {
-    public Move(int enumIndex) : base(enumIndex)
+    public Move(int enumIndex,Player player) : base(enumIndex,player)
     {
         
     }
@@ -16,6 +16,14 @@ public class Move : State
 
     public override void Update()
     {
+        if (InputData.moveValue.Compare(0.05f, ValueOperator.AbsLess, ValueAxis.X))
+        {
+            Debug.Log($"ChangeStateTo:{EState.Idle} with velocity:{InputData.moveValue.velocity}");
+            stateMachine.StateIndex = (int)EState.Idle;
+        }
+        
+        player.rigid.velocity = InputData.moveValue.velocity;
+
     }
     protected internal override void OnExit(int enumIndex)
     {

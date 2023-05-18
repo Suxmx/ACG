@@ -1,3 +1,4 @@
+using UnityEngine;
 using UnityEngine.Events;
 
 namespace MyStateMachine
@@ -6,11 +7,12 @@ namespace MyStateMachine
     {
         public StateMapper mapper;
         public UnityAction<int, int> StateChange;
+        private Player player;
 
         // 当前状态
         private State state;
 
-        private int stateIndex;
+        private int stateIndex=-10;
         /// <summary>
         /// 当前状态对应的index，外部应转换为枚举使用
         /// </summary>
@@ -21,9 +23,11 @@ namespace MyStateMachine
             {
                 if (stateIndex != value)
                 {
+                    
                     if (mapper != null)
                     {
                         State newState = mapper.GetState(value);
+                        
                         state?.OnExit(stateIndex);
                         state = newState;
                         newState?.OnEnter(value);
@@ -50,12 +54,19 @@ namespace MyStateMachine
         {
             mapper = _mapper;
             mapper.stateMachine = this;
-            this.stateIndex = stateIndex;
+            this.StateIndex = stateIndex;
+            foreach (var state in _mapper.stateDict.Values)
+            {
+                state.stateMachine = this;
+            }
         }
 
         public void Update(float deltaTime)
         {
+            Debug.Log($"Update---{(EState)stateIndex}");
+            
             state.Update();
+            
         }
         public void FixedUpdate(float deltaTime)
         {

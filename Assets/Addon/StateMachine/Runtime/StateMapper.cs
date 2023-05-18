@@ -9,7 +9,7 @@ namespace MyStateMachine
     /// </summary>
     public class StateMapper
     {
-        protected Dictionary<int, State> stateDict = new Dictionary<int, State>();
+        public Dictionary<int, State> stateDict = new Dictionary<int, State>();
         internal StateMachine stateMachine;
 
         public State GetState(int enumIndex)

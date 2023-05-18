@@ -5,7 +5,7 @@ using UnityEngine;
 public static class InputData
 {
     public static InputEvent inputEvent;
-    public static Vector2 moveValue;
+    public static VelocityInfo moveValue;
 
     public static void AddEvent(InputEvent inputEvent)
     {
@@ -15,7 +15,7 @@ public static class InputData
     public static void Clear()
     {
         InputData.inputEvent = InputEvent.None;
-        InputData.moveValue = Vector2.zero;
+        InputData.moveValue.velocity = Vector2.zero;
     }
 
     public static bool HasEvent(InputEvent inputEvent, bool fullMatch = false)

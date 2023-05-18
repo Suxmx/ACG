@@ -1,3 +1,4 @@
+using Services;
 using UnityEngine;
 
 namespace MyStateMachine
@@ -6,6 +7,7 @@ namespace MyStateMachine
     {
         protected internal StateMachine stateMachine;
         protected internal int enumIndex;
+        protected GameManager manager;
 
         public State()
         {
@@ -24,7 +26,8 @@ namespace MyStateMachine
         /// <param name="enumIndex">ÉÏÒ»¸ö×´Ì¬</param>
         protected internal virtual void OnEnter(int enumIndex)
         {
-
+            if (manager == null)
+                manager = ServiceLocator.Get<GameManager>();
         }
 
         /// <summary>

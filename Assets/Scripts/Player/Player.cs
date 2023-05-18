@@ -6,11 +6,11 @@ using UnityEngine;
 
 public class Player
 {
-    private GameObject playerObj;
-    private Transform trans;
+    public GameObject playerObj;
+    public Transform trans;
     private Collider2D collider;
     private Collider2D feetCollider;
-    private Rigidbody2D rigid;
+    public Rigidbody2D rigid;
     public bool isGround;
 
     private Dictionary<string, VelocityInfo> velocityDict;
@@ -35,18 +35,18 @@ public class Player
 
     private void InitStateMachine()
     {
-        State idle = new Idle((int)EState.Idle);
-        State move = new Move((int)EState.Move);
-        State jump = new Jump((int)EState.Jump);
+        State idle = new Idle((int)EState.Idle,this);
+        State move = new Move((int)EState.Move,this);
+        State jump = new Jump((int)EState.Jump,this);
         
         StateMapper mapper = new StateMapper();
         mapper.AddStates(idle,move,jump);
-        stateMachine = new StateMachine(mapper);
+        stateMachine = new StateMachine(mapper,(int)EState.Idle);
     }
     public void Update(float deltaTime)
     {
         isGround = CheckGround();
-        
+        stateMachine.Update(deltaTime);
     }
 
     private bool CheckGround()
