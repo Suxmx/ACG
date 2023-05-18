@@ -52,5 +52,18 @@ namespace MyStateMachine
             mapper.stateMachine = this;
             this.stateIndex = stateIndex;
         }
+
+        public void Update(float deltaTime)
+        {
+            state.Update();
+        }
+        public void FixedUpdate(float deltaTime)
+        {
+            state.FixedUpdate();            
+        }
+        public void LateUpdate(float deltaTime)
+        {
+            state.LateUpdate();
+        }
     }
 }

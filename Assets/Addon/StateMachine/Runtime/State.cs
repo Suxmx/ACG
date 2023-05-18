@@ -1,21 +1,21 @@
+using UnityEngine;
+
 namespace MyStateMachine
 {
     public class State
     {
-        protected GameCycle gameCycle;
         protected internal StateMachine stateMachine;
         protected internal int enumIndex;
 
         public State()
         {
-            gameCycle = GameCycle.Instance;
             enumIndex = 0;
         }
 
         public State(int index)
         {
-            gameCycle = GameCycle.Instance;
             enumIndex = index;
+            Debug.Log($"{(EState)enumIndex}:{enumIndex}");
         }
 
         /// <summary>
@@ -24,9 +24,7 @@ namespace MyStateMachine
         /// <param name="enumIndex">上一个状态</param>
         protected internal virtual void OnEnter(int enumIndex)
         {
-            gameCycle.AttachToGameCycle(EInvokeMode.Update, Update);
-            gameCycle.AttachToGameCycle(EInvokeMode.FixedUpdate, FixedUpdate);
-            gameCycle.AttachToGameCycle(EInvokeMode.LateUpdate, LateUpdate);
+
         }
 
         /// <summary>
@@ -35,16 +33,14 @@ namespace MyStateMachine
         /// <param name="enumIndex">下一个状态</param>
         protected internal virtual void OnExit(int enumIndex)
         {
-            gameCycle.RemoveFromGameCycle(EInvokeMode.Update, Update);
-            gameCycle.RemoveFromGameCycle(EInvokeMode.FixedUpdate, FixedUpdate);
-            gameCycle.RemoveFromGameCycle(EInvokeMode.LateUpdate, LateUpdate);
+
         }
 
         /// <summary>
         /// 处于此状态时，每帧自动调用
         /// </summary>
-        protected virtual void Update() { }
-        protected virtual void FixedUpdate() { }
-        protected virtual void LateUpdate() { }
+        public virtual void Update() { }
+        public virtual void FixedUpdate() { }
+        public virtual void LateUpdate() { }
     }
 }
