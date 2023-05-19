@@ -22,4 +22,9 @@ public abstract class PlayerState:State
         }
     }
     protected abstract void SetConditions();
+    public override void Update(float deltaTime)
+    {
+        base.Update(deltaTime);
+        CheckConditions();
+    }
 }

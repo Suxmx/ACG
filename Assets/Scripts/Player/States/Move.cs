@@ -15,20 +15,25 @@ public class Move : PlayerState
         base.OnEnter(enumIndex);
     }
 
-    public override void Update()
+    public override void Update(float deltaTime)
     {
-        CheckConditions();
+        
+        
+        // Vector2 v = new Vector2(InputData.moveValue.velocity.x * player.config.velocity, 0);
+        // v.y = player.rigid.velocity.y;
+        // player.rigid.velocity = v;
+        base.Update(deltaTime);
         Vector2 v = new Vector2(InputData.moveValue.velocity.x * player.config.velocity, 0);
-        v.y = player.rigid.velocity.y;
-        player.rigid.velocity = v;
-        Flip();
+        VelocityInfo info = new VelocityInfo("Input", v);
+        player.AddVelocity("Input",info);
     }
 
     protected override void SetConditions()
     {
         conditions = new List<ICondition>()
         {
-            new VelocityChecker(EState.Idle,ValueOperator.AbsLess,ValueAxis.X,0.05f,player.rigid)
+            new VelocityChecker(EState.Idle,ValueOperator.AbsLess,ValueAxis.X,0.05f),
+            new InputChecker(EState.Jump,InputEvent.Jump,false)
         };
     }
 
@@ -37,13 +42,7 @@ public class Move : PlayerState
         base.OnExit(enumIndex);
     }
 
-    private void Flip()
-    {
-        if (player.rigid.velocity.x > 0 && player.trans.localScale.x > 0)
-            player.trans.localScale = new Vector3(-originScale, originScale, 1);
-        else if(player.rigid.velocity.x < 0 && player.trans.localScale.x < 0)
-            player.trans.localScale = new Vector3(originScale, originScale, 1);
-    }
+    
 
     
 }

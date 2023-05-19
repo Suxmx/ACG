@@ -20,7 +20,15 @@ public class VelocityChecker : ICondition
         this.rightValue = rightValue;
         this.rigid = rigid;
         ifVector = true;
-        info = new VelocityInfo("Checker", Vector2.zero);
+        info = new VelocityInfo("RigidChecker", Vector2.zero);
+    }
+    public VelocityChecker(EState nextState, ValueOperator op, ValueAxis axis, Vector2 rightValue) : base(nextState)
+    {
+        this.op = op;
+        this.axis = axis;
+        this.rightValue = rightValue;
+        ifVector = true;
+        info = new VelocityInfo("InputChecker", Vector2.zero);
     }
 
     public VelocityChecker(EState nextState, ValueOperator op, ValueAxis axis, float rightValueF, Rigidbody2D rigid) : base(nextState)
@@ -30,7 +38,15 @@ public class VelocityChecker : ICondition
         this.rightValueF = rightValueF;
         this.rigid = rigid;
         ifVector = false;
-        info = new VelocityInfo("Checker", Vector2.zero);
+        info = new VelocityInfo("RigidChecker", Vector2.zero);
+    }
+    public VelocityChecker(EState nextState, ValueOperator op, ValueAxis axis, float rightValueF) : base(nextState)
+    {
+        this.op = op;
+        this.axis = axis;
+        this.rightValueF = rightValueF;
+        ifVector = false;
+        info = new VelocityInfo("InputChecker", Vector2.zero);
     }
 
     private ValueOperator op;
@@ -43,8 +59,14 @@ public class VelocityChecker : ICondition
 
     public override bool Excute()
     {
-        info.velocity = rigid.velocity;
-        
+        if(info.name=="RigidChecker")
+        {
+            info.velocity = rigid.velocity;
+        }
+        else if (info.name == "InputChecker")
+        {
+            info.velocity = InputData.moveValue.velocity;
+        }
         if (ifVector)
             return info.Compare(rightValue, op, axis);
         else
@@ -70,5 +92,21 @@ public class InputChecker : ICondition
         {
             return false;
         }
+    }
+}
+
+public class GroundChecker : ICondition
+{
+    private Player player;
+    private bool isNot;
+    public GroundChecker(EState nextState,Player player,bool isNot=false) : base(nextState)
+    {
+        this.player = player;
+        this.isNot = isNot;
+    }
+
+    public override bool Excute()
+    {
+        return isNot? !player.isGround: player.isGround;
     }
 }

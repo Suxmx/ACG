@@ -27,7 +27,7 @@ namespace MyStateMachine
                     if (mapper != null)
                     {
                         State newState = mapper.GetState(value);
-                        
+                        Debug.Log($"Enter---{(EState)value}");
                         state?.OnExit(stateIndex);
                         state = newState;
                         newState?.OnEnter(value);
@@ -63,9 +63,7 @@ namespace MyStateMachine
 
         public void Update(float deltaTime)
         {
-            Debug.Log($"Update---{(EState)stateIndex}");
-            
-            state.Update();
+            state.Update(deltaTime);
             
         }
         public void FixedUpdate(float deltaTime)

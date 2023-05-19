@@ -42,7 +42,7 @@ namespace MyStateMachine
         /// <summary>
         /// 处于此状态时，每帧自动调用
         /// </summary>
-        public virtual void Update() { }
+        public virtual void Update(float deltaTime) { }
         public virtual void FixedUpdate() { }
         public virtual void LateUpdate() { }
     }

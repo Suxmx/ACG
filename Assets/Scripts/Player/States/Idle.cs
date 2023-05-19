@@ -14,13 +14,9 @@ public class Idle : PlayerState
         base.OnEnter(enumIndex);
     }
 
-    public override void Update()
+    public override void Update(float deltaTime)
     {
-        if (InputData.moveValue.Compare(0.1f, ValueOperator.AbsGreater, ValueAxis.X))
-        {
-            Debug.Log($"ChangeStateTo:{EState.Move} with velocity:{InputData.moveValue.velocity}");
-            stateMachine.StateIndex = (int)EState.Move;
-        }
+        base.Update(deltaTime);
     }
     protected internal override void OnExit(int enumIndex)
     {
@@ -29,6 +25,10 @@ public class Idle : PlayerState
 
     protected override void SetConditions()
     {
-        
+        conditions = new List<ICondition>()
+        {
+            new VelocityChecker(EState.Move,ValueOperator.AbsGreater,ValueAxis.X,0.05f),
+            new InputChecker(EState.Jump,InputEvent.Jump,false)
+        };
     }
 }

@@ -29,6 +29,11 @@ public class GameManager : Service
        
     }
 
+    private void FixedUpdate()
+    {
+        
+    }
+
     private void UpdateInput()
     {
         InputData.Clear();
