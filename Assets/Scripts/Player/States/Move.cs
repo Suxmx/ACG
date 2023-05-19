@@ -17,11 +17,6 @@ public class Move : PlayerState
 
     public override void Update(float deltaTime)
     {
-        
-        
-        // Vector2 v = new Vector2(InputData.moveValue.velocity.x * player.config.velocity, 0);
-        // v.y = player.rigid.velocity.y;
-        // player.rigid.velocity = v;
         base.Update(deltaTime);
         Vector2 v = new Vector2(InputData.moveValue.velocity.x * player.config.velocity, 0);
         VelocityInfo info = new VelocityInfo("Input", v);

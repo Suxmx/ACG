@@ -9,20 +9,6 @@ public class Idle : PlayerState
     {
         
     }
-    protected internal override void OnEnter(int enumIndex)
-    {
-        base.OnEnter(enumIndex);
-    }
-
-    public override void Update(float deltaTime)
-    {
-        base.Update(deltaTime);
-    }
-    protected internal override void OnExit(int enumIndex)
-    {
-        base.OnExit(enumIndex);
-    }
-
     protected override void SetConditions()
     {
         conditions = new List<ICondition>()

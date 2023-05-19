@@ -67,11 +67,6 @@ public class Jump: PlayerState
         VelocityInfo info = new VelocityInfo("Input", v);
         player.AddVelocity("Input",info);
     }
-    protected internal override void OnExit(int enumIndex)
-    {
-        base.OnExit(enumIndex);
-    }
-
     protected override void SetConditions()
     {
         conditions = new List<ICondition>()
