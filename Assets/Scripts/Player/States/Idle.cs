@@ -26,4 +26,9 @@ public class Idle : PlayerState
     {
         base.OnExit(enumIndex);
     }
+
+    protected override void SetConditions()
+    {
+        
+    }
 }

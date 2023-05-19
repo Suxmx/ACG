@@ -11,6 +11,7 @@ public class Player
     private Collider2D collider;
     private Collider2D feetCollider;
     public Rigidbody2D rigid;
+    public PlayerConfigs config;
     public bool isGround;
 
     private Dictionary<string, VelocityInfo> velocityDict;
@@ -26,11 +27,14 @@ public class Player
         if(playerObj==null)
             Debug.LogError("未设置Player的GameObject");
 
-        InitStateMachine();
+        
         trans = playerObj.transform;
         collider = playerObj.GetComponent<Collider2D>();
         rigid = playerObj.GetComponent<Rigidbody2D>();
+        config = trans.Find("Body").GetComponent<PlayerConfigs>();
         feetCollider = trans.Find("Feet").GetComponent<Collider2D>();
+        
+        InitStateMachine();
     }
 
     private void InitStateMachine()

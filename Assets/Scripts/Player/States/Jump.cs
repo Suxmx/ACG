@@ -19,4 +19,9 @@ public class Jump: PlayerState
     {
         base.OnExit(enumIndex);
     }
+
+    protected override void SetConditions()
+    {
+        
+    }
 }

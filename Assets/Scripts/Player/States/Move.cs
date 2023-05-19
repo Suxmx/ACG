@@ -16,15 +16,19 @@ public class Move : PlayerState
 
     public override void Update()
     {
-        if (InputData.moveValue.Compare(0.05f, ValueOperator.AbsLess, ValueAxis.X))
-        {
-            Debug.Log($"ChangeStateTo:{EState.Idle} with velocity:{InputData.moveValue.velocity}");
-            stateMachine.StateIndex = (int)EState.Idle;
-        }
-        
-        player.rigid.velocity = InputData.moveValue.velocity;
+        CheckConditions();
+        player.rigid.velocity = InputData.moveValue.velocity * player.config.velocity;
 
     }
+
+    protected override void SetConditions()
+    {
+        conditions = new List<ICondition>()
+        {
+            new VelocityChecker(EState.Idle,ValueOperator.AbsLess,ValueAxis.X,0.05f,player.rigid)
+        };
+    }
+
     protected internal override void OnExit(int enumIndex)
     {
         base.OnExit(enumIndex);
