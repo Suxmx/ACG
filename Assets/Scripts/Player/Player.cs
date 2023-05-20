@@ -9,11 +9,13 @@ public class Player
     public Transform trans;
     private Collider2D collider;
     private Collider2D feetCollider;
+    private Animator animator;
     public Rigidbody2D rigid;
     public PlayerConfigs config;
     public bool isGround;
 
     private Dictionary<string, VelocityInfo> velocityDict;
+    private Dictionary<EState, string> aniDict;
     private StateMachine stateMachine;
     private float originScale;
 
@@ -33,6 +35,7 @@ public class Player
         trans = playerObj.transform;
         collider = playerObj.GetComponent<Collider2D>();
         rigid = playerObj.GetComponent<Rigidbody2D>();
+        animator = trans.Find("Body").GetComponent<Animator>();
         config = trans.Find("Body").GetComponent<PlayerConfigs>();
         feetCollider = trans.Find("Feet").GetComponent<Collider2D>();
 
@@ -43,13 +46,20 @@ public class Player
 
     private void InitStateMachine()
     {
+        aniDict = new Dictionary<EState, string>()
+        {
+            { EState.Idle, "Idle" },
+            { EState.Move, "Run" }
+        };
         State idle = new Idle((int)EState.Idle, this);
         State move = new Move((int)EState.Move, this);
-        State jump = new Jump((int)EState.Jump, this);
+        //State jump = new Jump((int)EState.Jump, this);
 
         StateMapper mapper = new StateMapper();
-        mapper.AddStates(idle, move, jump);
+        mapper.AddStates(idle, move);
         stateMachine = new StateMachine(mapper, (int)EState.Idle);
+
+        
     }
 
     public void Update(float deltaTime)
@@ -115,5 +125,13 @@ public class Player
         {
             velocityDict.Add(info.name, info);
         }
+    }
+
+    public void PlayAni(EState state)
+    {
+        string aniName;
+        if(!aniDict.TryGetValue(state,out aniName))
+            Debug.LogWarning($"不存在{state}的动画，将跳过播放");
+        animator.Play(aniName);
     }
 }

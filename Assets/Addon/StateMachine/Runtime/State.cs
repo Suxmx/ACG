@@ -8,6 +8,7 @@ namespace MyStateMachine
         protected internal StateMachine stateMachine;
         protected internal int enumIndex;
         protected GameManager manager;
+        protected EState thisState;
 
         public State()
         {
@@ -17,7 +18,8 @@ namespace MyStateMachine
         public State(int index)
         {
             enumIndex = index;
-            Debug.Log($"{(EState)enumIndex}:{enumIndex}");
+            thisState = (EState)index;
+            // Debug.Log($"{(EState)enumIndex}:{enumIndex}");
         }
 
         /// <summary>

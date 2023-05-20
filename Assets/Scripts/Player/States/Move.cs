@@ -13,6 +13,7 @@ public class Move : PlayerState
     protected internal override void OnEnter(int enumIndex)
     {
         base.OnEnter(enumIndex);
+        player.PlayAni(thisState);
     }
 
     public override void Update(float deltaTime)
@@ -28,7 +29,7 @@ public class Move : PlayerState
         conditions = new List<ICondition>()
         {
             new VelocityChecker(EState.Idle,ValueOperator.AbsLess,ValueAxis.X,0.05f),
-            new InputChecker(EState.Jump,InputEvent.Jump,false)
+           // new InputChecker(EState.Jump,InputEvent.Jump,false)
         };
     }
 
